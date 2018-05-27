@@ -22,7 +22,7 @@ var CURRENT_CACHES = {
 
 self.addEventListener('install',function (e) {
 e.waitUntil(
-    caches.open(cacheName).then(function(cache){
+    caches.open(CURRENT_CACHES).then(function(cache){
         console.log("ServiceWorker Caching cache files");
         return cache.addAll(cacheFiles)
     })

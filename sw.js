@@ -15,20 +15,22 @@ const cacheFiles = [
     'https://code.jquery.com/jquery-1.10.1.min.js',
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
-const cacheName = 'v2';
+var CACHE_VERSION = 2;
 var CURRENT_CACHES = {
-    prefetch: 'prefetch-cache-v' + cacheName
+    prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
 
-self.addEventListener('install',function (e) {
+self.addEventListener('install', function(event) {
+
+    console.log('Handling install event. Resources to prefetch:', cacheFiles);
 
     self.skipWaiting();
-e.waitUntil(
-    caches.open(CURRENT_CACHES).then(function(cache){
-        console.log("ServiceWorker Caching cache files");
-        return cache.addAll(cacheFiles)
-    })
-)
+
+    event.waitUntil(
+        caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
+            return cache.addAll(cacheFiles);
+        })
+    );
 });
 
 self.addEventListener('activate', function(event) {
@@ -115,4 +117,3 @@ self.addEventListener('fetch', function(event) {
         );
     }
 });
-

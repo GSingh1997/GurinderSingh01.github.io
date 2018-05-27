@@ -2,15 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9bc9721c-ab27-4b0f-83fa-0772205b3cc2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-128x128.png" afterPath="$PROJECT_DIR$/images/icons/icon-128x128.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-144x144.png" afterPath="$PROJECT_DIR$/images/icons/icon-144x144.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-152x152.png" afterPath="$PROJECT_DIR$/images/icons/icon-152x152.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-192x192.png" afterPath="$PROJECT_DIR$/images/icons/icon-192x192.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-384x384.png" afterPath="$PROJECT_DIR$/images/icons/icon-384x384.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-512x512.png" afterPath="$PROJECT_DIR$/images/icons/icon-512x512.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-72x72.png" afterPath="$PROJECT_DIR$/images/icons/icon-72x72.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/icons/icon-96x96.png" afterPath="$PROJECT_DIR$/images/icons/icon-96x96.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manifest.json" afterPath="$PROJECT_DIR$/manifest.json" />
     </list>
     <ignored path="PWA.iws" />
@@ -65,8 +56,6 @@
       <file leaf-file-name="manifest.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/manifest.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -253,12 +242,10 @@
       <workItem from="1525253882391" duration="228000" />
       <workItem from="1526720657154" duration="1057000" />
       <workItem from="1527430289359" duration="6521000" />
-      <workItem from="1527439850075" duration="6712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -573,14 +560,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -597,10 +576,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/manifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
           <folding />
         </state>
       </provider>

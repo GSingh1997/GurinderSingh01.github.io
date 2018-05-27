@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel='stylesheet' href='screen.css'/>
+    <link rel='manifest' href='manifest.json'/>
+
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        Top Tracks
+    </div>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+    <div id="tracks-container"></div>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+</div>
+<script id="tracks-template" type="text/x-handlebars-template">
+    {{#each tracks}}
+    <div data-track-id="{{id}}" style="background-image:url(http://direct.rhapsody.com/imageserver/v2/albums/{{albumId}}/images/300x300.jpg)" class="cover">
+        <div class=content-name>{{name}}</div>
+        <audio controls class= "audio">
+            <source src="{{previewURL}}" type="audio/mpeg">
+        </audio>
+    </div>
+    {{/each}}
+</script>
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -15,13 +15,13 @@ const cacheFiles = [
     'https://code.jquery.com/jquery-1.10.1.min.js',
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
-const CURRENT_CACHES = 'v3';
+const cacheName = 'v2';
 
 
 self.addEventListener('install',function (e) {
 e.waitUntil(
-    caches.open(CURRENT_CACHES).then(function(cache){
-        console.log("ServiceWorker Caching cache files")
+    caches.open(cacheName).then(function(cache){
+        console.log("ServiceWorker Caching cache files");
         return cache.addAll(cacheFiles)
     })
 )

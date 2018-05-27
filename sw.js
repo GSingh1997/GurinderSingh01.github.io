@@ -16,13 +16,10 @@ const cacheFiles = [
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
 const cacheName = 'v2';
-var CURRENT_CACHES = {
-    prefetch: 'prefetch-cache-v' + cacheName
-};
 
 self.addEventListener('install',function (e) {
 e.waitUntil(
-    caches.open(CURRENT_CACHES).then(function(cache){
+    caches.open(cacheName).then(function(cache){
         console.log("ServiceWorker Caching cache files");
         return cache.addAll(cacheFiles)
     })
@@ -33,8 +30,8 @@ self.addEventListener('activate', function(event) {
     // Delete all caches that aren't named in CURRENT_CACHES.
     // While there is only one cache in this example, the same logic will handle the case where
     // there are multiple versioned caches.
-    var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
-        return CURRENT_CACHES[key];
+    var expectedCacheNames = Object.keys(cacheName).map(function(key) {
+        return cacheName[key];
     });
 
     event.waitUntil(
@@ -61,7 +58,7 @@ self.addEventListener('fetch', function(event) {
         console.log('Range request for', event.request.url,
             ', starting position:', pos);
         event.respondWith(
-            caches.open(CURRENT_CACHES.prefetch)
+            caches.open(cacheName)
                 .then(function(cache) {
                     return cache.match(event.request.url);
                 }).then(function(res) {

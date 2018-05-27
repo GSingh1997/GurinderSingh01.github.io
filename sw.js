@@ -16,7 +16,9 @@ const cacheFiles = [
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
 const cacheName = 'v2';
-
+var CURRENT_CACHES = {
+    prefetch: 'prefetch-cache-v' + cacheName
+};
 
 self.addEventListener('install',function (e) {
 e.waitUntil(

@@ -20,6 +20,7 @@ const getTopTracks = $.get('https://api.napster.com/v2.1/tracks/top?apikey=ZTk2Y
 
 getTopTracks
     .then((response) => {
+console.log(response);
         $tracks.html(tracksTemplate(response));
     });/**
  * Created by gurin on 13/04/2018.

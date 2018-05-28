@@ -1,16 +1,31 @@
 
+
+body,html{height:100%}
+
+
 .header {
     font-size: 50px;
     text-align: center;
 
 }
+
+main{
+width: 100%;
+}
+
+#tracks-container{
+    width:50%;
+    margin-left:auto;
+margin-right:auto;}
 .track-cover {
     background-size: cover;
     width: 300px;
     height: 300px;
     display: inline-block;
 }
+.form{text-align: center;}
 
+p {display:inline-block; margin-top:5px;}
 .cover {
     background-size: cover;
     width: 300px;
@@ -24,8 +39,30 @@
 
 .audio {
     position: absolute;
-    bottom: 0;
+    bottom: 39px;
+    width:100%;
+    border-radius: 2px;
 }
+
+.button{position:absolute;
+    bottom:0 ;
+width:100%;
+    border-radius: 2px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+    padding: 9px;
+
+    transition: all 0.5s;
+    cursor: pointer;
+
+}
+
+
+
+
 .cover:hover {
     cursor: pointer;
 }

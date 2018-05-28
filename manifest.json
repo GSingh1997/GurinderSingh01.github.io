@@ -1,13 +1,13 @@
-/*test*/
+
 {
-  "name": "Top10Tracks",
+  "info": "Top10Tracks",
   "short_name": "Top10",
-  "theme_color": "#21f3a1",
+  "theme_color": "#222222",
   "background_color": "#202427",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "./",
-  "start_url": "./index.html",
+  "start_url": "index.html",
   "icons": [
     {
 

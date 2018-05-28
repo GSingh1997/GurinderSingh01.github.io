@@ -48,7 +48,7 @@ function initDb() {
 function saveToDB() {
 
 
- alert("button event");
+
      var artistName = $(this).parent().find("#artistName").text();
      var trackName = $(this).parent().find("#trackName").text();
     info.artist = artistName;
@@ -94,7 +94,7 @@ $(document).ready(function () {
     }
 
 
-    $("body").on("click","button",saveToDB)
+    $("main").on("click","button",saveToDB)
 });
 
 

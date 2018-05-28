@@ -19,7 +19,7 @@ const cacheFiles = [
     'https://code.jquery.com/jquery-1.10.1.min.js',
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
-const cacheDB = '1';
+const cacheDB = 'V1';
 
 self.addEventListener('install',function (e) {
     e.waitUntil(
@@ -34,8 +34,8 @@ self.addEventListener('activate', function(event) {
     // Delete all caches that aren't named in CURRENT_CACHES.
     // While there is only one cache in this example, the same logic will handle the case where
     // there are multiple versioned caches.
-    var expectedCacheNames = Object.keys(cacheDB).map(function(key) {
-        return cacheDB[key];
+    var expectedCacheNames = Object.keys(CURRENT_CACHCES).map(function(key) {
+        return CURRENT_CACHES[key];
     });
 
     event.waitUntil(
@@ -62,7 +62,7 @@ self.addEventListener('fetch', function(event) {
         console.log('Range request for', event.request.url,
             ', starting position:', pos);
         event.respondWith(
-            caches.open(cacheDB)
+            caches.open(CURRENT_CACHES.prefetch)
                 .then(function(cache) {
                     return cache.match(event.request.url);
                 }).then(function(res) {

@@ -1,6 +1,7 @@
 
 {
   "info": "Top10Tracks",
+  "name":"Top10Tracks",
   "short_name": "Top10",
   "theme_color": "#222222",
   "background_color": "#202427",

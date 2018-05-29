@@ -35,7 +35,14 @@ function initDb() {
             "tracks", {keyPath: "id", autoIncrement: true});
         let puntee = [
             {artist: "Post Malone", track: "phsyco"},
-            {artist: "Kendrick Lamar", track: "Humble"}];
+            {artist: "Kendrick Lamar", track: "Humble"},
+            {artist: "Eminem", track: "Lose yourself"},
+            {artist: "Psy", track: "Gangam Style"},
+            {artist: "Coldplay", track: "A Head full of Dreams"},
+            {artist: "dua lipa", track: "Be The One"},
+            {artist: "Ed Sheeran", track: "The A Team"}
+
+        ];
         for (i in puntee) {
             objectStore.add(puntee[i]);
             console.log("e")
@@ -47,7 +54,7 @@ function initDb() {
 
 function saveToDB() {
 
-
+alert("saving to indexedDB");
 
      var artistName = $(this).parent().find("#artistName").text();
      var trackName = $(this).parent().find("#trackName").text();
@@ -63,14 +70,26 @@ function saveToDB() {
     }
 }
 
+function renderFavSongs(data, dataKey){
+
+    $("table tbody").append("   <tr><td>" +dataKey +"</td><td><a href='#'> <span class='glyphicon glyphicon-user'></span> </a>" + data.artist + "</td> <td><a href='#'> <span class='glyphicon glyphicon-triangle-right'></span> </a> " + data.track +"</td> <td><button type='button' class='deletebtn btn btn-default btn-sm' value='" +dataKey + "'> <span class='glyphicon glyphicon-remove'></span> Remove </button></td> </tr>")
+
+}
+
 function loadDataDB() {
-    let transaction = db.transaction("cars", "readonly");
-    let objectStore = transaction.objectStore("cars");
+    $("table tbody").empty();
+
+
+    $("main").hide();
+    $(".contact").hide();
+    $("table").show();
+    let transaction = db.transaction("tracks", "readonly");
+    let objectStore = transaction.objectStore("tracks");
     let request = objectStore.openCursor();
     request.onsuccess = function (evt) {
         let cursor = evt.target.result;
         if (cursor) {
-            maakPunt(cursor.value);
+            renderFavSongs(cursor.value,cursor.key);
             cursor.continue();
         }
     };
@@ -78,6 +97,27 @@ function loadDataDB() {
         console.log("failed loading "+e);
     };
 }
+
+function removeFromDB() {
+
+
+    var transaction = db.transaction("tracks", "readwrite");
+    var objectStore = transaction.objectStore("tracks");
+    var id = parseInt($(this).val(), 10);
+    console.log($(this).val());
+   objectStore.delete( id);
+    loadDataDB();
+}
+
+
+function showContactForm(){
+
+    $("main").hide();
+    $("table").hide();
+    $(".contact").show();
+}
+
+
 $(document).ready(function () {
 
     initDb();
@@ -93,8 +133,10 @@ $(document).ready(function () {
         }
     }
 
-
-    $("main").on("click","button",saveToDB)
+    $("main").on("click","button",saveToDB);
+    $("#favTracks").on("click",loadDataDB);
+    $("#contact").on("click",showContactForm);
+    $(document).on("click",".deletebtn",removeFromDB);
 });
 
 

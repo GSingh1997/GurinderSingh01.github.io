@@ -19,101 +19,100 @@ const cacheFiles = [
     'https://code.jquery.com/jquery-1.10.1.min.js',
 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js'];
 
-const cacheDB = '1';
+const cacheName = 'v1';
 
-self.addEventListener('install',function (e) {
+
+
+self.addEventListener('install', function(e) {
+    console.log('[ServiceWorker] Installed');
+
+    // e.waitUntil Delays the event until the Promise is resolved
     e.waitUntil(
-        caches.open(cacheDB).then(function(cache){
-            console.log("ServiceWorker Caching cache files");
-            return cache.addAll(cacheFiles)
+
+        // Open the cache
+        caches.open(cacheName).then(function(cache) {
+
+            // Add all the default files to the cache
+            console.log('[ServiceWorker] Caching cacheFiles');
+            return cache.addAll(cacheFiles);
         })
-    )
+    ); // end e.waitUntil
 });
 
-self.addEventListener('activate', function(event) {
-    // Delete all caches that aren't named in CURRENT_CACHES.
-    // While there is only one cache in this example, the same logic will handle the case where
-    // there are multiple versioned caches.
-    var expectedCacheNames = Object.keys(cacheDB).map(function(key) {
-        return cacheDB[key];
-    });
 
-    event.waitUntil(
+self.addEventListener('activate', function(e) {
+    console.log('[ServiceWorker] Activated');
+
+    e.waitUntil(
+
+        // Get all the cache keys (cacheName)
         caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.map(function(cacheName) {
-                    if (expectedCacheNames.indexOf(cacheName) === -1) {
-                        // If this cache info isn't present in the array of "expected" cache names, then delete it.
-                        console.log('Deleting out of date cache:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
+            return Promise.all(cacheNames.map(function(thisCacheName) {
+
+                // If a cached item is saved under a previous cacheName
+                if (thisCacheName !== cacheName) {
+
+                    // Delete that cached file
+                    console.log('[ServiceWorker] Removing Cached Files from Cache - ', thisCacheName);
+                    return caches.delete(thisCacheName);
+                }
+            }));
         })
-    );
+    ); // end e.waitUntil
+
 });
 
-self.addEventListener('fetch', function(event) {
-    console.log('Handling fetch event for', event.request.url);
 
-    if (event.request.headers.get('range')) {
-        var pos =
-            Number(/^bytes\=(\d+)\-$/g.exec(event.request.headers.get('range'))[1]);
-        console.log('Range request for', event.request.url,
-            ', starting position:', pos);
-        event.respondWith(
-            caches.open(cacheDB)
-                .then(function(cache) {
-                    return cache.match(event.request.url);
-                }).then(function(res) {
-                if (!res) {
-                    return fetch(event.request)
-                        .then(res => {
-                            return res.arrayBuffer();
-                        });
-                }
-                return res.arrayBuffer();
-            }).then(function(ab) {
-                return new Response(
-                    ab.slice(pos),
-                    {
-                        status: 206,
-                        statusText: 'Partial Content',
-                        headers: [
-                            // ['Content-Type', 'video/webm'],
-                            ['Content-Range', 'bytes ' + pos + '-' +
-                            (ab.byteLength - 1) + '/' + ab.byteLength]]
-                    });
-            }));
-    } else {
-        console.log('Non-range request for', event.request.url);
-        event.respondWith(
-            // caches.match() will look for a cache entry in all of the caches available to the service worker.
-            // It's an alternative to name opening a specific named cache and then matching on that.
-            caches.match(event.request).then(function(response) {
-                if (response) {
-                    console.log('Found response in cache:', response);
+self.addEventListener('fetch', function(e) {
+    console.log('[ServiceWorker] Fetch', e.request.url);
+
+    // e.respondWidth Responds to the fetch event
+    e.respondWith(
+
+        // Check in cache for the request being made
+        caches.match(e.request)
+
+
+            .then(function(response) {
+
+                // If the request is in the cache
+                if ( response ) {
+                    console.log("[ServiceWorker] Found in Cache", e.request.url, response);
+                    // Return the cached version
                     return response;
                 }
-                console.log('No response found in cache. About to fetch from network...');
-                // event.request will always have the proper mode set ('cors, 'no-cors', etc.) so we don't
-                // have to hardcode 'no-cors' like we do when fetch()ing in the install handler.
-                return fetch(event.request).then(function(networkResponse){
-                    caches.open(event.request).then(function(cache){
-                        cache.put(event.request, networkResponse);
+
+                // If the request is NOT in the cache, fetch and cache
+
+                var requestClone = e.request.clone();
+                fetch(requestClone)
+                    .then(function(response) {
+
+                        if ( !response ) {
+                            console.log("[ServiceWorker] No response from fetch ")
+                            return response;
+                        }
+
+                        var responseClone = response.clone();
+
+                        //  Open the cache
+                        caches.open(cacheName).then(function(cache) {
+
+                            // Put the fetched response in the cache
+                            cache.put(e.request, responseClone);
+                            console.log('[ServiceWorker] New Data Cached', e.request.url);
+
+                            // Return the response
+                            return response;
+
+                        }); // end caches.open
+
+                    })
+                    .catch(function(err) {
+                        console.log('[ServiceWorker] Error Fetching & Caching New Data', err);
                     });
-                    return networkResponse.clone();
-                }).catch(function(error) {
-                    // This catch() will handle exceptions thrown from the fetch() operation.
-                    // Note that a HTTP error response (e.g. 404) will NOT trigger an exception.
-                    // It will return a normal response object that has the appropriate error code set.
-                    console.error('Fetching failed:', error);
 
-                    throw error;
-                });
-            })
-        );
-    }
+
+            }) // end caches.match(e.request)
+    ); // end e.respondWith
 });
-
-
